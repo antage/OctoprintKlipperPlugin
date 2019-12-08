@@ -23,12 +23,12 @@ class KlipperPlugin(
       octoprint.plugin.AssetPlugin,
       octoprint.plugin.SimpleApiPlugin,
       octoprint.plugin.EventHandlerPlugin):
-   
+
    _parsing_response = False
    _message = ""
 
    #-- Startup Plugin
-   
+
    def on_after_startup(self):
       klipper_port = self._settings.get(["connection", "port"])
       additional_ports = self._settings.global_get(["serial", "additionalPorts"])
@@ -69,10 +69,10 @@ class KlipperPlugin(
             reload_command="RESTART"
          )
       )
-   
+
    def on_settings_load(self):
       data = octoprint.plugin.SettingsPlugin.on_settings_load(self)
-      
+
       filepath = os.path.expanduser(
          self._settings.get(["configuration", "path"])
       )
@@ -128,7 +128,7 @@ class KlipperPlugin(
    def on_settings_migrate(self, target, current):
       if current is None:
          settings = self._settings
-         
+
          if settings.has(["serialport"]):
             settings.set(["connection", "port"], settings.get(["serialport"]) )
             settings.remove(["serialport"])
@@ -143,19 +143,19 @@ class KlipperPlugin(
          if settings.has(["probeHeight"]):
             settings.set(["probe", "height"], settings.get(["probeHeight"]))
             settings.remove(["probeHeight"])
-         
+
          if settings.has(["probeLift"]):
             settings.set(["probe", "lift"], settings.get(["probeLift"]))
             settings.remove(["probeLift"])
-         
+
          if settings.has(["probeSpeedXy"]):
             settings.set(["probe", "speed_xy"], settings.get(["probeSpeedXy"]))
             settings.remove(["probeSpeedXy"])
-         
+
          if settings.has(["probeSpeedZ"]):
             settings.set(["probe", "speed_z"], settings.get(["probeSpeedZ"]))
             settings.remove(["probeSpeedZ"])
-            
+
          if settings.has(["probePoints"]):
             points = settings.get(["probePoints"])
             points_new = []
@@ -167,7 +167,7 @@ class KlipperPlugin(
          if settings.has(["configPath"]):
             settings.set(["config_path"], settings.get(["configPath"]))
             settings.remove(["configPath"])
-         
+
    #-- Template Plugin
 
    def get_template_configs(self):
@@ -217,9 +217,9 @@ class KlipperPlugin(
             custom_bindings=True
          )
       ]
-   
+
    #-- Asset Plugin
-   
+
    def get_assets(self):
       return dict(
          js=["js/klipper.js",
@@ -233,9 +233,9 @@ class KlipperPlugin(
          css=["css/klipper.css"],
          less=["css/klipper.less"]
       )
-   
+
    #-- Event Handler Plugin
-   
+
    def on_event(self, event, payload):
        if "Connecting" == event:
            self.updateStatus("info", "Connecting ...")
@@ -247,9 +247,9 @@ class KlipperPlugin(
        elif "Error" == event:
            self.updateStatus("error", "Error")
            self.logError(payload["error"])
-           
+
    #-- GCODE Hook
-   
+
    def on_parse_gcode(self, comm, line, *args, **kwargs):
       if "FIRMWARE_VERSION" in line:
          printerInfo = parse_firmware_line(line)
@@ -277,11 +277,11 @@ class KlipperPlugin(
          getStats=["logFile"],
          loadConfig=["configFile"]
       )
-      
+
    def on_api_command(self, command, data):
       if command == "listLogFiles":
          files = []
-         for f in glob.glob("/tmp/*.log*"):
+         for f in glob.glob("/var/log/klipper/*.log"):
             filesize = os.path.getsize(f)
             files.append(dict(
                name=os.path.basename(f) + " ({:.1f} KB)".format(filesize / 1000.0),
@@ -310,7 +310,7 @@ class KlipperPlugin(
             pip="https://github.com/mmone/OctoPrintKlipper/archive/{target_version}.zip"
          )
       )
-    
+
    #-- Helpers
    def sendMessage(self, type, subtype, payload):
       self._plugin_manager.send_plugin_message(
@@ -322,13 +322,13 @@ class KlipperPlugin(
             payload=payload
          )
       )
-   
+
    def pollStatus(self):
       self._printer.commands("STATUS")
 
    def updateStatus(self, type, status):
       self.sendMessage("status", type, status)
-   
+
    def logInfo(self, message):
       self.sendMessage("log", "info", message)
 
