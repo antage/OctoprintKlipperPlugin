@@ -8,7 +8,7 @@
 <div class="control-group">
    <div class="controls">
       <label class="control-label small"><i class="icon-list-alt"></i> {{ _('Macros') }}</label>
-      <div data-bind="foreach: settings.settings.plugins.klipper.macros">
+      <div data-bind="foreach: settings.settings.plugins.klippernext.macros">
          <!-- ko if: sidebar -->
          <button class="btn btn-block" data-bind="text: name, click: $parent.executeMacro, enable: $parent.isActive()"></button>
          <!-- /ko -->

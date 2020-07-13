@@ -1,20 +1,20 @@
 # coding=utf-8
 
-plugin_identifier = "klipper"
+plugin_identifier = "klippernext"
 
-plugin_package = "octoprint_klipper"
+plugin_package = "octoprint_klippernext"
 
-plugin_name = "OctoKlipper"
+plugin_name = "OctoKlipper Next"
 
-plugin_version = "0.2.5.2"
+plugin_version = "1.0"
 
 plugin_description = """A plugin for OctoPrint to configure,control and monitor the Klipper 3D printer software."""
 
-plugin_author = "Martin Muehlhaeuser"
+plugin_author = "Martin Muehlhaeuser, Anton Ageev"
 
-plugin_author_email = "github@mmone.de"
+plugin_author_email = "antage@gmail.com"
 
-plugin_url = "http://blog.mmone.de/2018/02/05/octoprint-plugin-for-klipper/"
+plugin_url = "https://github.com/antage/octoklipper-next"
 
 plugin_license = "AGPLv3"
 

@@ -11,25 +11,25 @@
     <div class="control-group">
         <label class="control-label">{{ _('Serial Port') }}</label>
         <div class="controls">
-            <input type="text" class="input-block-level" data-bind="value: settings.settings.plugins.klipper.connection.port">
+            <input type="text" class="input-block-level" data-bind="value: settings.settings.plugins.klippernext.connection.port">
         </div>
     </div>
     <div class="control-group">
         <label class="control-label">{{ _('Replace Connection Panel') }}</label>
         <div class="controls">
-            <input type="checkbox" class="input-block-level" data-bind="checked: settings.settings.plugins.klipper.connection.replace_connection_panel">
+            <input type="checkbox" class="input-block-level" data-bind="checked: settings.settings.plugins.klippernext.connection.replace_connection_panel">
         </div>
     </div>
     <div class="control-group">
         <label class="control-label">{{ _('Klipper Config Path') }}</label>
         <div class="controls">
-            <input type="text" class="input-block-level" data-bind="value: settings.settings.plugins.klipper.configuration.path">
+            <input type="text" class="input-block-level" data-bind="value: settings.settings.plugins.klippernext.configuration.path">
         </div>
     </div>
     <div class="control-group">
         <label class="control-label">{{ _('Configuration Reload Command') }}</label>
         <div class="controls">
-           <select data-bind="value: settings.settings.plugins.klipper.configuration.reload_command">
+           <select data-bind="value: settings.settings.plugins.klippernext.configuration.reload_command">
               <option value="RESTART">RESTART</option>
               <option value="FIRMWARE_RESTART">FIRMWARE_RESTART</option>
            </select>
@@ -50,7 +50,7 @@
           </div>
        </div>
     </div>
-    <div data-bind="foreach: settings.settings.plugins.klipper.macros">   
+    <div data-bind="foreach: settings.settings.plugins.klippernext.macros">
        <div class="control-group">
            <label class="control-label">{{ _('Name') }}</label>
            <div class="controls">
@@ -114,7 +114,7 @@ WRITE_FILE={label:Write to File, default:0, options:0|1}
       <label class="control-label">{{ _('Probe Height') }}</label>
       <div class="controls">
          <div class="input-append">
-            <input type="text" class="input-block-level span3" data-bind="value: settings.settings.plugins.klipper.probe.height">
+            <input type="text" class="input-block-level span3" data-bind="value: settings.settings.plugins.klippernext.probe.height">
             <span class="add-on">mm</span>
          </div>
          <span class="help-inline">{{ _('Z-height to probe at') }}</span>
@@ -124,7 +124,7 @@ WRITE_FILE={label:Write to File, default:0, options:0|1}
       <label class="control-label">{{ _('Probe Lift') }}</label>
       <div class="controls">
          <div class="input-append">
-           <input type="text" class="input-block-level span3" data-bind="value: settings.settings.plugins.klipper.probe.lift">
+           <input type="text" class="input-block-level span3" data-bind="value: settings.settings.plugins.klippernext.probe.lift">
            <span class="add-on">mm</span>
          </div>
          <span class="help-inline">{{ _('Lift Head by this amount before moving.') }}</span>
@@ -134,7 +134,7 @@ WRITE_FILE={label:Write to File, default:0, options:0|1}
       <label class="control-label">{{ _('Probe Feedrate Z') }}</label>
       <div class="controls">
          <div class="input-append">
-           <input type="text" class="input-block-level span3" data-bind="value: settings.settings.plugins.klipper.probe.speed_z">
+           <input type="text" class="input-block-level span3" data-bind="value: settings.settings.plugins.klippernext.probe.speed_z">
            <span class="add-on">mm/min</span>
          </div>
       </div>
@@ -143,7 +143,7 @@ WRITE_FILE={label:Write to File, default:0, options:0|1}
       <label class="control-label">{{ _('Feedrate X/Y') }}</label>
       <div class="controls">
          <div class="input-append">
-           <input type="text" class="input-block-level span3" data-bind="value: settings.settings.plugins.klipper.probe.speed_xy">
+           <input type="text" class="input-block-level span3" data-bind="value: settings.settings.plugins.klippernext.probe.speed_xy">
            <span class="add-on">mm/min</span>
          </div>
       </div>
@@ -159,7 +159,7 @@ WRITE_FILE={label:Write to File, default:0, options:0|1}
         </div>
       </div>
     </div>
-    <div data-bind="foreach: settings.settings.plugins.klipper.probe.points" class="control-group">
+    <div data-bind="foreach: settings.settings.plugins.klippernext.probe.points" class="control-group">
        <label class="control-label" data-bind="text: $index"></label>
        <div class="controls">
            <div class="row-fluid">
@@ -183,7 +183,7 @@ WRITE_FILE={label:Write to File, default:0, options:0|1}
   <!-- Klipper Conf -->
   <div class="tab-pane" id="conf">
    <div class="control-group">
-      <textarea id="plugin-klipper-config" rows="31" class="block" data-bind="value: settings.settings.plugins.klipper.config"></textarea>
+      <textarea id="plugin-klipper-config" rows="31" class="block" data-bind="value: settings.settings.plugins.klippernext.config"></textarea>
    </div>
   </div>
 </div>

@@ -13,10 +13,10 @@ $(function() {
         self.connectionState = parameters[2];
         self.levelingViewModel = parameters[3];
         self.paramMacroViewModel = parameters[4];
-        
+
         self.shortStatus = ko.observable();
         self.logMessages = ko.observableArray();
-        
+
         self.showLevelingDialog = function() {
            var dialog = $("#klipper_leveling_dialog");
            dialog.modal({
@@ -26,7 +26,7 @@ $(function() {
            });
            self.levelingViewModel.initView();
         }
-        
+
         self.showPidTuningDialog = function() {
            var dialog = $("#klipper_pid_tuning_dialog");
            dialog.modal({
@@ -35,7 +35,7 @@ $(function() {
               keyboard: false
            });
         }
-        
+
         self.showOffsetDialog = function() {
            var dialog = $("#klipper_offset_dialog");
            dialog.modal({
@@ -43,7 +43,7 @@ $(function() {
               backdrop: 'static'
            });
         }
-        
+
         self.showGraphDialog = function() {
            var dialog = $("#klipper_graph_dialog");
            dialog.modal({
@@ -52,17 +52,17 @@ $(function() {
               maxHeight: "600px"
            });
         }
-        
+
         self.executeMacro = function(macro) {
            var paramObjRegex = /{(.*?)}/g;
-           
+
            if (macro.macro().match(paramObjRegex) == null) {
               OctoPrint.control.sendGcode(
                  macro.macro().replace(/(?:\r\n|\r|\n)/g, " ")
               );
            } else {
               self.paramMacroViewModel.process(macro);
-              
+
               var dialog = $("#klipper_macro_dialog");
               dialog.modal({
                  show: 'true',
@@ -70,25 +70,25 @@ $(function() {
               });
            }
         }
-     
+
         self.onGetStatus = function() {
            OctoPrint.control.sendGcode("Status")
         }
-        
+
         self.onRestartFirmware = function() {
            OctoPrint.control.sendGcode("FIRMWARE_RESTART")
         };
-        
+
         self.onRestartHost = function() {
            OctoPrint.control.sendGcode("RESTART")
         };
-        
+
         self.onAfterBinding = function() {
-           self.connectionState.selectedPort(self.settings.settings.plugins.klipper.connection.port());
+           self.connectionState.selectedPort(self.settings.settings.plugins.klippernext.connection.port());
         }
-        
+
         self.onDataUpdaterPluginMessage = function(plugin, message) {
-           if(plugin == "klipper") {
+           if(plugin == "klippernext") {
               if(message["type"] == "status") {
                  self.shortStatus(message["payload"]);
               } else {
@@ -104,11 +104,11 @@ $(function() {
               msg: message.replace(/\n/gi, "<br>")}
            );
         }
-        
+
         self.onClearLog = function() {
            self.logMessages.removeAll();
         };
-        
+
         self.isActive = function() {
            return self.connectionState.isOperational() && self.loginState.isUser();
         }
@@ -123,6 +123,6 @@ $(function() {
            "klipperLevelingViewModel",
            "klipperMacroDialogViewModel"
         ],
-        elements: ["#tab_plugin_klipper_main", "#sidebar_plugin_klipper", "#navbar_plugin_klipper"]
+        elements: ["#tab_plugin_klippernext_main", "#sidebar_plugin_klippernext", "#navbar_plugin_klippernext"]
     });
 });

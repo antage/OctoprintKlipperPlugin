@@ -9,14 +9,14 @@ $(function() {
 function KlipperGraphViewModel(parameters) {
    var self = this;
    self.loginState = parameters[0];
-   
+
    self.header = OctoPrint.getRequestHeaders({
       "content-type": "application/json",
       "cache-control": "no-cache"
    });
-   
-   self.apiUrl = OctoPrint.getSimpleApiUrl("klipper");
-   
+
+   self.apiUrl = OctoPrint.getSimpleApiUrl("klippernext");
+
    self.availableLogFiles = ko.observableArray();
    self.logFile = ko.observable();
    self.status = ko.observable();
@@ -31,24 +31,24 @@ function KlipperGraphViewModel(parameters) {
       self.canvas = $("#klipper_graph_canvas")[0]
       self.canvasContext = self.canvas.getContext("2d");
       self.spinnerDialog = $("#klipper_graph_spinner");
-      
+
       Chart.defaults.global.elements.line.borderWidth=1;
       Chart.defaults.global.elements.line.fill= false;
       Chart.defaults.global.elements.point.radius= 0;
-      
+
       var myChart = new Chart(self.canvas, {
          type: "line"
       });
-      
+
       if(self.loginState.loggedIn()) {
          self.listLogFiles();
       }
    }
-   
+
    self.onUserLoggedIn = function(user) {
       self.listLogFiles();
    }
-   
+
    self.listLogFiles = function() {
       var settings = {
         "crossDomain": true,
@@ -59,31 +59,31 @@ function KlipperGraphViewModel(parameters) {
         "dataType": "json",
         "data": JSON.stringify({command: "listLogFiles"})
       }
-      
+
       $.ajax(settings).done(function (response) {
          self.availableLogFiles.removeAll();
          self.availableLogFiles(response["data"]);
       });
    }
-   
+
    self.saveGraphToPng = function() {
       button =  $('#download-btn');
       var dataURL = self.canvas.toDataURL("image/png");//.replace("image/png", "image/octet-stream");
       button.attr("href", dataURL);
    }
-   
+
    self.showSpinner = function(showDialog) {
       if (showDialog) {
          self.spinnerDialog.modal({
             show: true,
             keyboard: false,
-            backdrop: "static" 
+            backdrop: "static"
          });
       } else {
          self.spinnerDialog.modal("hide");
       }
    }
-   
+
    self.toggleDatasetFill = function() {
       if(self.datasets) {
          for (i=0; i < self.datasets().length; i++) {
@@ -93,11 +93,11 @@ function KlipperGraphViewModel(parameters) {
       }
       return true
    }
-   
+
    self.convertTime = function(val) {
       return moment(val, "X");
    }
-   
+
    self.loadData = function() {
       var settings = {
         "crossDomain": true,
@@ -113,15 +113,15 @@ function KlipperGraphViewModel(parameters) {
            }
         )
       }
-      
+
       self.showSpinner(true);
-      
+
       $.ajax(settings).done(function (response) {
          self.status("")
          self.datasetFill(false);
-         
+
          self.showSpinner(false);
-         
+
          if("error" in response) {
             self.status(response.error);
          } else {
@@ -134,7 +134,7 @@ function KlipperGraphViewModel(parameters) {
                yAxisID: 'y-axis-1',
                data: response.loads
             });
-            
+
             self.datasets.push(
             {
                label: "Bandwith",
@@ -143,7 +143,7 @@ function KlipperGraphViewModel(parameters) {
                yAxisID: 'y-axis-1',
                data: response.bwdeltas
             });
-            
+
             self.datasets.push(
             {
                label: "Host Buffer",
@@ -152,7 +152,7 @@ function KlipperGraphViewModel(parameters) {
                yAxisID: 'y-axis-1',
                data: response.buffers
             });
-            
+
             self.datasets.push(
             {
                label: "Awake Time",
@@ -161,7 +161,7 @@ function KlipperGraphViewModel(parameters) {
                yAxisID: 'y-axis-1',
                data: response.awake
             });
-            
+
             self.chart = new Chart(self.canvas, {
                type: "line",
                data: {
@@ -202,7 +202,7 @@ function KlipperGraphViewModel(parameters) {
                      ]
                   },
                   legend: {
-                     
+
                   }
                }
             });
